@@ -31,19 +31,14 @@ class DirectoryLink
                     'sort' => $sort,
                     'term' => $term,
                 ],
-            );
+            )
+            ->json();
 
-        if ($response->ok() === false) {
-            throw new DirectoryLinkException($response->body(), $response->status());
+        if (array_key_exists('error', $response) === true) {
+            throw new DirectoryLinkException($response['error'], $response['status']);
         }
 
-        $json = $response->json();
-
-        if (array_key_exists('error', $json) === true) {
-            throw new DirectoryLinkException($json['error'], $json['status']);
-        }
-
-        return $json;
+        return $response;
     }
 
     // Utilities

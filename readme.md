@@ -132,3 +132,12 @@ If left blank, the `field` parameter will use the `directory-link.<type>.on` set
 This will only update existing local models.
 
 It will not create or delete models.
+
+### Testing
+
+Add the `AssertsDirectory` trait to your testing class to use the following methods:
+
+| Method               | Parameters    | Returns | Notes                                                                    |
+|----------------------|---------------|---------|--------------------------------------------------------------------------|
+| useDirectoryEmulator |               | void    | Adds HTTP mocks to all directory API endpoints with successful responses |
+| directoryShouldFail  | string $error | void    | Causes all directory API endpoints to fail with an error message         |
