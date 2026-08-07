@@ -2,13 +2,15 @@
 
 namespace NetworkRailBusinessSystems\DirectoryLink\Models;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator as LengthAwarePaginatorInterface;
+use Illuminate\Pagination\LengthAwarePaginator;
+use NetworkRailBusinessSystems\DirectoryLink\DirectoryLink;
 use NetworkRailBusinessSystems\DirectoryLink\Interfaces\DirectoryModel;
 
 class DirectoryUser implements DirectoryModel
 {
     // Setup
-    public function __construct(
+    final public function __construct(
         public string $id,
         public string $mail,
         public string $displayName,
@@ -23,19 +25,45 @@ class DirectoryUser implements DirectoryModel
         //
     }
 
+    public static function make(array $data): static
+    {
+        return new static(
+            $data['id'],
+            $data['mail'],
+            $data['displayName'],
+            $data['givenName'],
+            $data['surname'],
+            $data['jobTitle'],
+            $data['officeLocation'],
+            $data['phone'],
+            $data['department'],
+            $data['employeeId'],
+        );
+    }
+
     // API
     public static function exists(
         string $term,
         string $field = 'email',
     ): bool {
-        // TODO: Implement exists() method.
+        return DirectoryLink::query(
+            '/user/exists',
+            $term,
+            $field,
+        )['exists'] === true;
     }
 
     public static function get(
         string $term,
         string $field = 'email',
     ): static {
-        // Get and return user
+        $data = DirectoryLink::query(
+            '/user/get',
+            $term,
+            $field,
+        );
+
+        return static::make($data);
     }
 
     public static function list(
@@ -45,8 +73,27 @@ class DirectoryUser implements DirectoryModel
         int $per = 10,
         string $sort = 'email',
         string $order = 'asc',
-    ): LengthAwarePaginator {
-        // Poll directory
-        // Return paginated results
+    ): LengthAwarePaginatorInterface {
+        $data = DirectoryLink::query(
+            '/user/list',
+            $term,
+            $field,
+            $page,
+            $per,
+            $sort,
+            $order,
+        );
+
+        $items = [];
+        foreach ($data['results'] as $result) {
+            $items[] = static::make($result);
+        }
+
+        return new LengthAwarePaginator(
+            $items,
+            $data['total'],
+            $per,
+            $page,
+        );
     }
 }

@@ -6,6 +6,8 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 interface DirectoryModel
 {
+    public static function make(array $data): static;
+
     public static function exists(
         string $term,
         string $field = 'email',

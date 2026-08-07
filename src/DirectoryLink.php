@@ -2,10 +2,51 @@
 
 namespace NetworkRailBusinessSystems\DirectoryLink;
 
+use Illuminate\Support\Facades\Http;
 use NetworkRailBusinessSystems\DirectoryLink\Exceptions\DirectoryLinkException;
 
 class DirectoryLink
 {
+    // API
+    public static function query(
+        string $endpoint,
+        string $term,
+        string $field,
+        ?int $page = null,
+        ?int $per = null,
+        ?string $sort = null,
+        ?string $order = null,
+    ): array {
+        $response = Http::withToken(
+            config('directory-link.api.token'),
+        )
+            ->acceptJson()
+            ->query(
+                config('directory-link.api.endpoint') . $endpoint,
+                [
+                    'field' => $field,
+                    'order' => $order,
+                    'page' => $page,
+                    'per' => $per,
+                    'sort' => $sort,
+                    'term' => $term,
+                ],
+            );
+
+        if ($response->ok() === false) {
+            throw new DirectoryLinkException($response->body(), $response->status());
+        }
+
+        $json = $response->json();
+
+        if (array_key_exists('error', $json) === true) {
+            throw new DirectoryLinkException($json['error'], $json['status']);
+        }
+
+        return $json;
+    }
+
+    // Utilities
     public static function getModelType(string $modelClass): string
     {
         $modelTypes = config('directory-link.models');

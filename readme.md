@@ -79,6 +79,14 @@ You can call the following methods from any directory model:
 | get    | string $term, string $field                                                   | DirectoryModel, false | Get a single specific entry from the directory, or false if it does not exist |
 | list   | string $term, string $field, int $page, int $per, string $sort, string $order | LengthAwarePaginator  | Search for any matching entries in the directory                              |
 
+#### Querying the directory directly
+
+Every endpoint offered by the directory should have an equivalent model method.
+
+Should you need to query the directory directly, you can use the `DirectoryLink::query()` method.
+
+This will return the results in JSON format, or throw a `DirectoryLinkException`.
+
 ### Rules
 
 #### ExistsInDirectory

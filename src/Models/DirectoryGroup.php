@@ -2,13 +2,15 @@
 
 namespace NetworkRailBusinessSystems\Entra\Models;
 
-use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator as LengthAwarePaginatorInterface;
+use Illuminate\Pagination\LengthAwarePaginator;
+use NetworkRailBusinessSystems\DirectoryLink\DirectoryLink;
 use NetworkRailBusinessSystems\DirectoryLink\Interfaces\DirectoryModel;
 
 class DirectoryGroup implements DirectoryModel
 {
     // Setup
-    public function __construct(
+    final public function __construct(
         public string $id,
         public string $mail,
         public string $displayName,
@@ -21,19 +23,41 @@ class DirectoryGroup implements DirectoryModel
         }
     }
 
+    public static function make(array $data): static
+    {
+        return new static(
+            $data['id'],
+            $data['mail'],
+            $data['displayName'],
+            $data['description'],
+            $data['members'],
+            $data['membersCount'],
+        );
+    }
+
     // API
     public static function exists(
         string $term,
         string $field = 'email',
     ): bool {
-        // TODO: Implement exists() method.
+        return DirectoryLink::query(
+            '/group/exists',
+            $term,
+            $field,
+        )['exists'] === true;
     }
 
     public static function get(
         string $term,
         string $field = 'email',
     ): static {
-        // TODO: Implement get() method.
+        $data = DirectoryLink::query(
+            '/group/get',
+            $term,
+            $field,
+        );
+
+        return static::make($data);
     }
 
     public static function list(
@@ -43,7 +67,27 @@ class DirectoryGroup implements DirectoryModel
         int $per = 10,
         string $sort = 'email',
         string $order = 'asc',
-    ): LengthAwarePaginator {
-        // TODO: Implement list() method.
+    ): LengthAwarePaginatorInterface {
+        $data = DirectoryLink::query(
+            '/group/list',
+            $term,
+            $field,
+            $page,
+            $per,
+            $sort,
+            $order,
+        );
+
+        $items = [];
+        foreach ($data['results'] as $result) {
+            $items[] = static::make($result);
+        }
+
+        return new LengthAwarePaginator(
+            $items,
+            $data['total'],
+            $per,
+            $page,
+        );
     }
 }
