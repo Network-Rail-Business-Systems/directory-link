@@ -1,6 +1,5 @@
 <?php
 
-
 namespace NetworkRailBusinessSystems\Entra\Models;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;

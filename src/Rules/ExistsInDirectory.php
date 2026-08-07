@@ -11,7 +11,7 @@ class ExistsInDirectory implements ValidationRule
     /** @param class-string<DirectoryModel> $directoryModelClass */
     public function __construct(
         public string $directoryModelClass,
-        public string $field = 'email'
+        public string $field = 'email',
     ) {
         //
     }

@@ -27,11 +27,13 @@ class RefreshFromDirectory extends Command implements PromptsForMissingInput
         /** @var class-string<SyncsWithDirectory> $localModelClass */
         $localModelClass = config("directory-link.models.$type.local");
 
-        /** @var class-string<DirectoryModel> $localModelClass */
+        /** @var class-string<DirectoryModel> $directoryModelClass */
         $directoryModelClass = config("directory-link.models.$type.directory");
 
         $localModelClass::query()
-            ->each(function (SyncsWithDirectory $localModel) use ($directoryModelClass, $field) {
+            ->each(function ($localModel) use ($directoryModelClass, $field) {
+                /** @var SyncsWithDirectory $localModel */
+
                 $this->info("Updating {$localModel->$field}...");
 
                 $directoryModel = $directoryModelClass::get($localModel->$field, $field);
@@ -47,6 +49,7 @@ class RefreshFromDirectory extends Command implements PromptsForMissingInput
         $this->info('Complete!');
     }
 
+    /** @return array|array[] */
     protected function promptForMissingArgumentsUsing(): array
     {
         return [

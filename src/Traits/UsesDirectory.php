@@ -9,7 +9,7 @@ use NetworkRailBusinessSystems\DirectoryLink\Interfaces\DirectoryModel;
 use NetworkRailBusinessSystems\DirectoryLink\Interfaces\SyncsWithDirectory;
 
 /**
- * @implements SyncsWithDirectory
+ * @implements SyncsWithDirectory<Model>
  * @mixin Model
  */
 trait UsesDirectory

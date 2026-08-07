@@ -26,6 +26,7 @@ class ImportUser extends Command implements PromptsForMissingInput
         $this->info('Complete!');
     }
 
+    /** @return array|array[]|string[] */
     protected function promptForMissingArgumentsUsing(): array
     {
         return [

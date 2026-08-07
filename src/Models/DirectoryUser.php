@@ -26,7 +26,7 @@ class DirectoryUser implements DirectoryModel
     // API
     public static function exists(
         string $term,
-        string $field = 'email'
+        string $field = 'email',
     ): bool {
         // TODO: Implement exists() method.
     }
