@@ -1,0 +1,48 @@
+{
+    "name": "networkrailbusinesssystems/directory-link",
+    "description": "Resources for connecting to the Directory system",
+    "keywords": ["laravel", "directory", "link"],
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "NetworkRailBusinessSystems\\DirectoryLink\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "NetworkRailBusinessSystems\\DirectoryLink\\Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Anthony Edmonds",
+            "email": "anthony.edmonds@networkrail.co.uk"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "illuminate/support": "^13|^12"
+    },
+    "require-dev": {
+        "anthonyedmonds/laravel-testing-traits": "^1",
+        "brianium/paratest": "^7",
+        "larastan/larastan": "^3",
+        "laravel/pint": "^1",
+        "networkrailbusinesssystems/badges": "^1",
+        "orchestra/testbench": "^11",
+        "phpunit/phpunit": "^12"
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "NetworkRailBusinessSystems\\DirectoryLink\\DirectoryLinkServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
