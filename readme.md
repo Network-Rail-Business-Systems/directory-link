@@ -54,11 +54,11 @@ Implement the `SyncsWithDirectory` interface on any local model which should sto
 
 The `UsesDirectory` trait is available with a default implementation.
 
-| Method                     | Parameters            | Returns                   | Notes                                                                          |
-|----------------------------|-----------------------|---------------------------|--------------------------------------------------------------------------------|
-| importFromDirectory        | string $term          | Model<SyncsWithDirectory> | Attempt to create or update a local model from the directory                   |
-| processDirectoryDetails    | DirectoryModel $model | Model<SyncsWithDirectory> | Perform any needed data transformation before it is applied to the local model |
-| updateWithDirectoryDetails | DirectoryModel $model | Model<SyncsWithDirectory> | Apply the details from the directory model to the local model                  |
+| Method                     | Parameters                   | Returns                   | Notes                                                                          |
+|----------------------------|------------------------------|---------------------------|--------------------------------------------------------------------------------|
+| importFromDirectory        | string $term, ?string $field | Model<SyncsWithDirectory> | Attempt to create or update a local model from the directory                   |
+| processDirectoryDetails    | DirectoryModel $model        | Model<SyncsWithDirectory> | Perform any needed data transformation before it is applied to the local model |
+| updateWithDirectoryDetails | DirectoryModel $model        | Model<SyncsWithDirectory> | Apply the details from the directory model to the local model                  |
 
 You can then call `MyModel::importFromDirectory($term)` to have them synced.
 

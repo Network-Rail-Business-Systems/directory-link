@@ -14,10 +14,10 @@ use NetworkRailBusinessSystems\DirectoryLink\Interfaces\SyncsWithDirectory;
  */
 trait UsesDirectory
 {
-    public static function importFromDirectory(string $term): static
+    public static function importFromDirectory(string $term, ?string $field = null): static
     {
         $type = DirectoryLink::getModelType(static::class);
-        $on = config("directory-link.sync.$type.on");
+        $on = $field ?: config("directory-link.sync.$type.on");
 
         /** @var class-string<DirectoryModel> $directoryModelClass */
         $directoryModelClass = config("directory-link.models.$type.directory");
