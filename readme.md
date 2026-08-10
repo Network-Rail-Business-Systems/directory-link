@@ -73,11 +73,11 @@ Models are provided for all supported directory models:
 
 You can call the following methods from any directory model:
 
-| Method | Parameters                                                                    | Returns               | Notes                                                                         |
-|--------|-------------------------------------------------------------------------------|-----------------------|-------------------------------------------------------------------------------|
-| exists | string $term, string $field                                                   | bool                  | Whether the given term exists in the directory                                |
-| get    | string $term, string $field                                                   | DirectoryModel, false | Get a single specific entry from the directory, or false if it does not exist |
-| list   | string $term, string $field, int $page, int $per, string $sort, string $order | LengthAwarePaginator  | Search for any matching entries in the directory                              |
+| Method | Parameters                                                                    | Returns              | Notes                                                                         |
+|--------|-------------------------------------------------------------------------------|----------------------|-------------------------------------------------------------------------------|
+| exists | string $term, string $field                                                   | bool                 | Whether the given term exists in the directory                                |
+| get    | string $term, string $field                                                   | ?DirectoryModel      | Get a single specific entry from the directory, or false if it does not exist |
+| list   | string $term, string $field, int $page, int $per, string $sort, string $order | LengthAwarePaginator | Search for any matching entries in the directory                              |
 
 #### Querying the directory directly
 
@@ -137,10 +137,10 @@ It will not create or delete models.
 
 Add the `AssertsDirectory` trait to your testing class to use the following methods:
 
-| Method               | Parameters    | Returns              | Notes                                                                    |
-|----------------------|---------------|----------------------|--------------------------------------------------------------------------|
-| useDirectoryEmulator |               | void                 | Adds HTTP mocks to all directory API endpoints with successful responses |
-| directoryShouldFail  | string $error | void                 | Causes all directory API endpoints to fail with an error message         |
-| directoryFakeGroup   |               | array                | Create a fake DirectoryGroup                                             |
-| directoryFakeList    | array $list   | LengthAwarePaginator | Create a paginated response containing the given list                    |
-| directoryFakeUser    |               | array                | Create a fake DirectoryUser                                              |
+| Method               | Parameters    | Returns               | Notes                                                                    |
+|----------------------|---------------|-----------------------|--------------------------------------------------------------------------|
+| useDirectoryEmulator |               | void                  | Adds HTTP mocks to all directory API endpoints with successful responses |
+| directoryShouldFail  | string $error | void                  | Causes all directory API endpoints to fail with an error message         |
+| directoryFakeGroup   | bool $model   | DirectoryGroup, array | Create a fake DirectoryGroup                                             |
+| directoryFakeList    | array $list   | LengthAwarePaginator  | Create a paginated response containing the given list                    |
+| directoryFakeUser    | bool $model   | DirectoryUser, array  | Create a fake DirectoryUser                                              |
