@@ -2,8 +2,6 @@
 
 namespace NetworkRailBusinessSystems\DirectoryLink\Interfaces;
 
-use Illuminate\Contracts\Database\Eloquent\Builder;
-
 interface SyncsWithDirectory
 {
     /** Find or create a local model, fill it with details from the directory, and save */
@@ -14,6 +12,4 @@ interface SyncsWithDirectory
 
     /** Update the local model with details from the directory */
     public function updateWithDirectoryDetails(DirectoryModel $model): static;
-
-    public static function query(): Builder;
 }

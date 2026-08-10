@@ -1,10 +1,10 @@
 {
-    "name": "entra",
-    "description": "Easily sign-in and poll users and groups in Microsoft Entra",
-    "keywords": ["laravel", "entra", "microsoft", "graph", "auth"],
+    "name": "directory-link",
+    "description": "Resources for connecting to the Directory system",
+    "keywords": ["laravel", "directory", "link"],
     "author": "Anthony Edmonds",
     "license": "MIT",
-    "homepage": "https://github.com/Network-Rail-Business-Systems/entra",
+    "homepage": "https://github.com/Network-Rail-Business-Systems/directory-link",
     "scripts": {
         "badges": "php vendor/networkrailbusinesssystems/badges/badges.php",
         "larastan": "php vendor/bin/phpstan analyse --memory-limit 512M",

@@ -1,6 +1,6 @@
 <?php
 
-namespace NetworkRailBusinessSystems\Entra\Models;
+namespace NetworkRailBusinessSystems\DirectoryLink\Models;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator as LengthAwarePaginatorInterface;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -50,14 +50,16 @@ class DirectoryGroup implements DirectoryModel
     public static function get(
         string $term,
         string $field = 'email',
-    ): static {
+    ): ?static {
         $data = DirectoryLink::query(
             '/group/get',
             $term,
             $field,
         );
 
-        return static::make($data);
+        return empty($data) === false
+            ? static::make($data)
+            : null;
     }
 
     public static function list(
@@ -79,15 +81,15 @@ class DirectoryGroup implements DirectoryModel
         );
 
         $items = [];
-        foreach ($data['results'] as $result) {
+        foreach ($data['data'] as $result) {
             $items[] = static::make($result);
         }
 
         return new LengthAwarePaginator(
             $items,
             $data['total'],
-            $per,
-            $page,
+            $data['per_page'],
+            $data['current_page'],
         );
     }
 }

@@ -1,8 +1,10 @@
 <?php
 
-namespace NetworkRailBusinessSystems\Entra;
+namespace NetworkRailBusinessSystems\DirectoryLink;
 
 use Illuminate\Support\ServiceProvider;
+use NetworkRailBusinessSystems\DirectoryLink\Commands\ImportFromDirectory;
+use NetworkRailBusinessSystems\DirectoryLink\Commands\RefreshFromDirectory;
 
 class DirectoryLinkServiceProvider extends ServiceProvider
 {
@@ -19,5 +21,10 @@ class DirectoryLinkServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__ . '/config.php' => config_path('directory-link.php'),
         ], 'directory-link');
+
+        $this->commands([
+            ImportFromDirectory::class,
+            RefreshFromDirectory::class,
+        ]);
     }
 }

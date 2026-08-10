@@ -1,6 +1,6 @@
 <?php
 
-namespace NetworkRailBusinessSystems\Entra\Rules;
+namespace NetworkRailBusinessSystems\DirectoryLink\Rules;
 
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;

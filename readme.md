@@ -137,7 +137,10 @@ It will not create or delete models.
 
 Add the `AssertsDirectory` trait to your testing class to use the following methods:
 
-| Method               | Parameters    | Returns | Notes                                                                    |
-|----------------------|---------------|---------|--------------------------------------------------------------------------|
-| useDirectoryEmulator |               | void    | Adds HTTP mocks to all directory API endpoints with successful responses |
-| directoryShouldFail  | string $error | void    | Causes all directory API endpoints to fail with an error message         |
+| Method               | Parameters    | Returns              | Notes                                                                    |
+|----------------------|---------------|----------------------|--------------------------------------------------------------------------|
+| useDirectoryEmulator |               | void                 | Adds HTTP mocks to all directory API endpoints with successful responses |
+| directoryShouldFail  | string $error | void                 | Causes all directory API endpoints to fail with an error message         |
+| directoryFakeGroup   |               | array                | Create a fake DirectoryGroup                                             |
+| directoryFakeList    | array $list   | LengthAwarePaginator | Create a paginated response containing the given list                    |
+| directoryFakeUser    |               | array                | Create a fake DirectoryUser                                              |

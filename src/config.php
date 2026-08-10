@@ -1,7 +1,7 @@
 <?php
 
 use NetworkRailBusinessSystems\DirectoryLink\Models\DirectoryUser;
-use NetworkRailBusinessSystems\Entra\Models\DirectoryGroup;
+use NetworkRailBusinessSystems\DirectoryLink\Models\DirectoryGroup;
 
 return [
     /* Which Models to use for directory operations */

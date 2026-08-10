@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Contracts\Console\PromptsForMissingInput;
 use NetworkRailBusinessSystems\DirectoryLink\Interfaces\SyncsWithDirectory;
 
-class ImportUser extends Command implements PromptsForMissingInput
+class ImportFromDirectory extends Command implements PromptsForMissingInput
 {
     protected $signature = 'directory-link:import {type} {term}';
 
@@ -26,16 +26,17 @@ class ImportUser extends Command implements PromptsForMissingInput
         $this->info('Complete!');
     }
 
-    /** @return array|array[]|string[] */
     protected function promptForMissingArgumentsUsing(): array
     {
         return [
-            'type' => [
-                'label' => 'Which type of model do you want to import?',
-                'options' => array_keys(
-                    config('directory-link.sync'),
-                ),
-            ],
+            'type' => function () {
+                return $this->choice(
+                    'Which type of model do you want to import?',
+                    array_keys(
+                        config('directory-link.sync'),
+                    ),
+                );
+            },
             'term' => 'What term should be used to find the model to import?',
         ];
     }

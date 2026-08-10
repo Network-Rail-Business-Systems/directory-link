@@ -23,15 +23,13 @@ trait UsesDirectory
         $directoryModelClass = config("directory-link.models.$type.directory");
         $directoryModel = $directoryModelClass::get($term, $on);
 
-        if ($directoryModel === false) {
-            throw new NotInDirectoryException("$term could not be found in the directory");
-        }
-
-        return static::query()
-            ->where($on, '=', $term)
-            ->firstOrNew()
-            ->processDirectoryDetails($directoryModel)
-            ->updateWithDirectoryDetails($directoryModel);
+        return $directoryModel === null
+            ? throw new NotInDirectoryException("\"$term\" could not be found in the directory")
+            : static::query()
+                ->where($on, '=', $term)
+                ->firstOrNew()
+                ->processDirectoryDetails($directoryModel)
+                ->updateWithDirectoryDetails($directoryModel);
     }
 
     public function processDirectoryDetails(DirectoryModel $model): static

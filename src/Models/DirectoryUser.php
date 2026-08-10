@@ -56,14 +56,16 @@ class DirectoryUser implements DirectoryModel
     public static function get(
         string $term,
         string $field = 'email',
-    ): static {
+    ): ?static {
         $data = DirectoryLink::query(
             '/user/get',
             $term,
             $field,
         );
 
-        return static::make($data);
+        return empty($data) === false
+            ? static::make($data)
+            : null;
     }
 
     public static function list(
@@ -85,15 +87,16 @@ class DirectoryUser implements DirectoryModel
         );
 
         $items = [];
-        foreach ($data['results'] as $result) {
+        foreach ($data['data'] as $result) {
             $items[] = static::make($result);
         }
 
+        // TODO URL / Path / Query
         return new LengthAwarePaginator(
             $items,
             $data['total'],
-            $per,
-            $page,
+            $data['per_page'],
+            $data['current_page'],
         );
     }
 }

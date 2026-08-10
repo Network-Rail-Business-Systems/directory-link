@@ -35,7 +35,10 @@ class DirectoryLink
             ->json();
 
         if (array_key_exists('error', $response) === true) {
-            throw new DirectoryLinkException($response['error'], $response['status']);
+            throw new DirectoryLinkException(
+                $response['error'],
+                $response['status'] ?? 500,
+            );
         }
 
         return $response;
@@ -55,6 +58,6 @@ class DirectoryLink
             }
         }
 
-        throw new DirectoryLinkException("$modelClass is not configured for directory syncing");
+        throw new DirectoryLinkException("\"$modelClass\" is not configured for directory syncing");
     }
 }

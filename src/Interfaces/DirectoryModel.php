@@ -16,7 +16,7 @@ interface DirectoryModel
     public static function get(
         string $term,
         string $field = 'email',
-    ): static|false;
+    ): ?static;
 
     public static function list(
         string $term,
