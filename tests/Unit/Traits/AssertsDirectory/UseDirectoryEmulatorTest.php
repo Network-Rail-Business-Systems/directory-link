@@ -63,7 +63,7 @@ class UseDirectoryEmulatorTest extends TestCase
     public function testBadEndpoint(): void
     {
         $this->expectException(DirectoryLinkException::class);
-        $this->expectExceptionMessage('"potato" is not a supported directory endpoint');
+        $this->expectExceptionMessage('"http://localhost.com/potato" is not a supported directory endpoint');
 
         DirectoryLink::query('/potato', '', '');
     }
