@@ -29,9 +29,9 @@ class DirectoryGroup implements DirectoryModel
             $data['id'],
             $data['mail'],
             $data['displayName'],
-            $data['description'],
-            $data['members'],
-            $data['membersCount'],
+            $data['description'] ?? '',
+            $data['members'] ?? [],
+            $data['membersCount'] ?? -1,
         );
     }
 

@@ -33,11 +33,11 @@ class DirectoryUser implements DirectoryModel
             $data['displayName'],
             $data['givenName'],
             $data['surname'],
-            $data['jobTitle'],
-            $data['officeLocation'],
-            $data['phone'],
-            $data['department'],
-            $data['employeeId'],
+            $data['jobTitle'] ?? '',
+            $data['officeLocation'] ?? '',
+            $data['phone'] ?? '',
+            $data['department'] ?? '',
+            $data['employeeId'] ?? 0,
         );
     }
 
