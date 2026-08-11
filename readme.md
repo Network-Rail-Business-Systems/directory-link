@@ -141,6 +141,7 @@ Add the `AssertsDirectory` trait to your testing class to use the following meth
 |----------------------|---------------|-----------------------|--------------------------------------------------------------------------|
 | useDirectoryEmulator |               | void                  | Adds HTTP mocks to all directory API endpoints with successful responses |
 | directoryShouldFail  | string $error | void                  | Causes all directory API endpoints to fail with an error message         |
+| directoryShouldReturnEmpty |         | void                  | Causes all directory endpoints to return an empty result                 |
 | directoryFakeGroup   | bool $model   | DirectoryGroup, array | Create a fake DirectoryGroup                                             |
 | directoryFakeList    | array $list   | LengthAwarePaginator  | Create a paginated response containing the given list                    |
 | directoryFakeUser    | bool $model   | DirectoryUser, array  | Create a fake DirectoryUser                                              |
