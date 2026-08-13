@@ -38,7 +38,7 @@ class DirectoryGroup implements DirectoryModel
     // API
     public static function exists(
         string $term,
-        string $field = 'email',
+        string $field = 'mail',
     ): bool {
         return DirectoryLink::query(
             '/group/exists',
@@ -49,7 +49,7 @@ class DirectoryGroup implements DirectoryModel
 
     public static function get(
         string $term,
-        string $field = 'email',
+        string $field = 'mail',
     ): ?static {
         $data = DirectoryLink::query(
             '/group/get',
@@ -64,10 +64,10 @@ class DirectoryGroup implements DirectoryModel
 
     public static function list(
         string $term,
-        string $field = 'email',
+        string $field = 'mail',
         int $page = 1,
         int $per = 10,
-        string $sort = 'email',
+        string $sort = 'mail',
         string $order = 'asc',
     ): LengthAwarePaginatorInterface {
         $data = DirectoryLink::query(

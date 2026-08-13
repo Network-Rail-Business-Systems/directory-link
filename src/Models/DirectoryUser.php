@@ -44,7 +44,7 @@ class DirectoryUser implements DirectoryModel
     // API
     public static function exists(
         string $term,
-        string $field = 'email',
+        string $field = 'mail',
     ): bool {
         return DirectoryLink::query(
             '/user/exists',
@@ -55,7 +55,7 @@ class DirectoryUser implements DirectoryModel
 
     public static function get(
         string $term,
-        string $field = 'email',
+        string $field = 'mail',
     ): ?static {
         $data = DirectoryLink::query(
             '/user/get',
@@ -70,10 +70,10 @@ class DirectoryUser implements DirectoryModel
 
     public static function list(
         string $term,
-        string $field = 'email',
+        string $field = 'mail',
         int $page = 1,
         int $per = 10,
-        string $sort = 'email',
+        string $sort = 'mail',
         string $order = 'asc',
     ): LengthAwarePaginatorInterface {
         $data = DirectoryLink::query(

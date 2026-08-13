@@ -21,7 +21,7 @@ class ExistsInDirectoryTest extends TestCase
     {
         $this->assertRulePasses(
             $this->rule,
-            'email',
+            'mail',
             'a',
         );
     }
@@ -34,7 +34,7 @@ class ExistsInDirectoryTest extends TestCase
             $this->rule,
             'email',
             'a',
-            'An entry with the email "a" does not exist in the directory',
+            'An entry with the mail "a" does not exist in the directory',
         );
     }
 }
