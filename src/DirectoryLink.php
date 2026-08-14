@@ -32,7 +32,7 @@ class DirectoryLink
                     'term' => $term,
                 ],
             )
-            ->json();
+            ->json() ?? [];
 
         if (array_key_exists('error', $response) === true) {
             throw new DirectoryLinkException(
