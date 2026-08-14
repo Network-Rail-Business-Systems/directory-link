@@ -2,9 +2,8 @@
 
 namespace NetworkRailBusinessSystems\DirectoryLink\Traits;
 
-use Faker\Generator;
+use AnthonyEdmonds\LaravelTestingTraits\UsesFaker;
 use GuzzleHttp\Promise\PromiseInterface;
-use Illuminate\Container\Container;
 use Illuminate\Http\Client\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Http;
@@ -13,6 +12,8 @@ use NetworkRailBusinessSystems\DirectoryLink\Models\DirectoryUser;
 
 trait AssertsDirectory
 {
+    use UsesFaker;
+
     public bool $directoryShouldFail = false;
 
     public bool $directoryShouldReturnEmpty = false;
@@ -141,10 +142,5 @@ trait AssertsDirectory
             json_encode($properties),
             $status,
         );
-    }
-
-    protected function faker(): Generator
-    {
-        return Container::getInstance()->make(Generator::class);
     }
 }

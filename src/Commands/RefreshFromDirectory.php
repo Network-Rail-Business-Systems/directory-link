@@ -17,13 +17,10 @@ class RefreshFromDirectory extends Command implements PromptsForMissingInput
     public function handle(): void
     {
         $type = $this->argument('type');
-        $field = $this->argument('field');
+        $field = $this->argument('field') ?? config("directory-link.sync.$type.on");
+        $localField = config("directory-link.sync.$type.attributes.$field");
 
-        if ($field === null) {
-            $field = config("directory-link.sync.$type.on");
-        }
-
-        $this->info("Starting $type refresh using \"$field\"...");
+        $this->info("Starting $type refresh using \"$field\" => \"$localField\"...");
 
         /** @var class-string<Model> $localModelClass */
         $localModelClass = config("directory-link.models.$type.local");
@@ -35,12 +32,12 @@ class RefreshFromDirectory extends Command implements PromptsForMissingInput
         $progressBar = $this->output->createProgressBar($total);
 
         $localModelClass::query()
-            ->each(function ($localModel) use ($progressBar, $directoryModelClass, $field) {
+            ->each(function ($localModel) use ($localField, $progressBar, $directoryModelClass, $field) {
                 /** @var SyncsWithDirectory $localModel */
 
-                $this->info("Updating \"{$localModel->$field}\"...");
+                $this->info("Updating \"{$localModel->$localField}\"...");
 
-                $directoryModel = $directoryModelClass::get($localModel->$field, $field);
+                $directoryModel = $directoryModelClass::get($localModel->$localField, $field);
 
                 if ($directoryModel !== null) {
                     $localModel->processDirectoryDetails($directoryModel);

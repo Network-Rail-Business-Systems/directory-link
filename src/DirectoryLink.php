@@ -34,9 +34,12 @@ class DirectoryLink
             )
             ->json() ?? [];
 
-        if (array_key_exists('error', $response) === true) {
+        if (
+            array_key_exists('error', $response) === true
+            || array_key_exists('exception', $response) === true
+        ) {
             throw new DirectoryLinkException(
-                $response['error'],
+                $response['error'] ?? $response['message'],
                 $response['status'] ?? 500,
             );
         }

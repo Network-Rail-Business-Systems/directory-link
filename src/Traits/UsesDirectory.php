@@ -18,6 +18,7 @@ trait UsesDirectory
     {
         $type = DirectoryLink::getModelType(static::class);
         $on = $field ?: config("directory-link.sync.$type.on");
+        $localOn = config("directory-link.sync.$type.attributes.$on");
 
         /** @var class-string<DirectoryModel> $directoryModelClass */
         $directoryModelClass = config("directory-link.models.$type.directory");
@@ -26,7 +27,7 @@ trait UsesDirectory
         return $directoryModel === null
             ? throw new NotInDirectoryException("\"$term\" could not be found in the directory")
             : static::query()
-                ->where($on, '=', $term)
+                ->where($localOn, '=', $term)
                 ->firstOrNew()
                 ->processDirectoryDetails($directoryModel)
                 ->updateWithDirectoryDetails($directoryModel);

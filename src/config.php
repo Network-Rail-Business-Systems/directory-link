@@ -19,7 +19,7 @@ return [
     /* Which attributes to sync in directory => system format */
     'sync' => [
         'group' => [
-            'on' => 'azure_id',
+            'on' => 'id',
             'attributes' => [
                 'description' => 'description',
                 'displayName' => 'name',
@@ -30,7 +30,7 @@ return [
             ],
         ],
         'user' => [
-            'on' => 'azure_id',
+            'on' => 'id',
             'attributes' => [
                 'department' => 'business_area',
                 'displayName' => 'name',
