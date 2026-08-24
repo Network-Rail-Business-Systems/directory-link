@@ -25,11 +25,11 @@ Resources for connecting to the Directory system
 
 The following settings can be changed in your `.env`:
 
-| .env key           | Config key                  | Required | Notes                                      |
-|--------------------|-----------------------------|----------|--------------------------------------------|
-| DIRECTORY_ENDPOINT | directory-link.api.endpoint | Yes      | The URL of the Directory system            |
-| DIRECTORY_TOKEN    | directory-link.api.token    | Yes      | The Directory access token for this system |
-
+| .env key           | Config key                      | Required | Default | Notes                                         |
+|--------------------|---------------------------------|----------|---------|-----------------------------------------------|
+| DIRECTORY_ENDPOINT | directory-link.api.endpoint     | Yes      |         | The URL of the Directory system               |
+| DIRECTORY_TOKEN    | directory-link.api.token        | Yes      |         | The Directory access token for this system    |
+| DIRECTORY_EMULATOR | directory-link.emulator.enabled | No       | false   | Whether the directory emulator should be used |
 
 The following additional settings are available in the `directory-link.php` configuration file:
 
@@ -137,11 +137,23 @@ It will not create or delete models.
 
 Add the `AssertsDirectory` trait to your testing class to use the following methods:
 
-| Method               | Parameters    | Returns               | Notes                                                                    |
-|----------------------|---------------|-----------------------|--------------------------------------------------------------------------|
-| useDirectoryEmulator |               | void                  | Adds HTTP mocks to all directory API endpoints with successful responses |
-| directoryShouldFail  | string $error | void                  | Causes all directory API endpoints to fail with an error message         |
-| directoryShouldReturnEmpty |         | void                  | Causes all directory endpoints to return an empty result                 |
-| directoryFakeGroup   | bool $model   | DirectoryGroup, array | Create a fake DirectoryGroup                                             |
-| directoryFakeList    | array $list   | LengthAwarePaginator  | Create a paginated response containing the given list                    |
-| directoryFakeUser    | bool $model   | DirectoryUser, array  | Create a fake DirectoryUser                                              |
+| Method                     | Parameters    | Returns               | Notes                                                                    |
+|----------------------------|---------------|-----------------------|--------------------------------------------------------------------------|
+| useDirectoryEmulator       |               | void                  | Adds HTTP mocks to all directory API endpoints with successful responses |
+| directoryShouldFail        | string $error | void                  | Causes all directory API endpoints to fail with an error message         |
+| directoryShouldReturnEmpty |               | void                  | Causes all directory endpoints to return an empty result                 |
+| directoryFakeGroup         | bool $model   | DirectoryGroup, array | Create a fake DirectoryGroup                                             |
+| directoryFakeList          | array $list   | LengthAwarePaginator  | Create a paginated response containing the given list                    |
+| directoryFakeUser          | bool $model   | DirectoryUser, array  | Create a fake DirectoryUser                                              |
+
+### Emulation
+
+Use the emulator when you do not have a copy of the directory system running, such as local development.
+
+You should not use this emulator for unit tests.
+
+Set the `DIRECTORY_EMULATOR` .env setting to `true` to enable it.
+
+You can search for any of the models listed in the directory config file.
+
+When getting a user by `id`, such as when logging in, the first emulated user will be returned with an adjusted `id`.
