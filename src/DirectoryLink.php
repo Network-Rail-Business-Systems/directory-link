@@ -17,22 +17,24 @@ class DirectoryLink
         ?string $sort = null,
         ?string $order = null,
     ): array {
-        $response = Http::withToken(
-            config('directory-link.api.token'),
-        )
-            ->acceptJson()
-            ->query(
-                config('directory-link.api.endpoint') . $endpoint,
-                [
-                    'field' => $field,
-                    'order' => $order,
-                    'page' => $page,
-                    'per' => $per,
-                    'sort' => $sort,
-                    'term' => $term,
-                ],
+        $response = config('directory-link.emulator.enabled') === true
+            ? DirectoryLink::emulateResult($endpoint, $term, $field)
+            : Http::withToken(
+                config('directory-link.api.token'),
             )
-            ->json() ?? [];
+                ->acceptJson()
+                ->query(
+                    config('directory-link.api.endpoint') . $endpoint,
+                    [
+                        'field' => $field,
+                        'order' => $order,
+                        'page' => $page,
+                        'per' => $per,
+                        'sort' => $sort,
+                        'term' => $term,
+                    ],
+                )
+                ->json() ?? [];
 
         if (
             array_key_exists('error', $response) === true
@@ -62,5 +64,30 @@ class DirectoryLink
         }
 
         throw new DirectoryLinkException("\"$modelClass\" is not configured for directory syncing");
+    }
+
+    public static function emulateResult(
+        string $endpoint,
+        string $term,
+        string $field,
+    ): array {
+        $directory = match (true) {
+            str_contains($endpoint, 'group') => config('directory-link.emulator.groups'),
+            str_contains($endpoint, 'user') => config('directory-link.emulator.users'),
+            default => throw new DirectoryLinkException("\"$endpoint\" has not been set up for emulation"),
+        };
+
+        if (
+            $field === 'id'
+            && str_contains($endpoint, 'user/get')
+        ) {
+            $first = $directory[0];
+            $first[$field] = $term;
+            return $first;
+        }
+
+        return array_filter($directory, function (array $item) use ($term, $field) {
+            return $item[$field] === $term;
+        });
     }
 }
