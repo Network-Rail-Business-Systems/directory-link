@@ -40,7 +40,7 @@ class EmulateResultTest extends TestCase
 
         $this->assertEquals(
             'abc-123',
-            $users[0]['id'],
+            $users['id'],
         );
     }
 

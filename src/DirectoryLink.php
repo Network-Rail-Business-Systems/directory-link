@@ -83,8 +83,7 @@ class DirectoryLink
         ) {
             $first = $directory[0];
             $first[$field] = $term;
-
-            return [$first];
+            return $first;
         }
 
         return array_filter($directory, function (array $item) use ($term, $field) {
