@@ -49,6 +49,7 @@ return [
     /* API connection credentials */
     'api' => [
         'endpoint' => env('DIRECTORY_ENDPOINT'),
+        'proxy' => env('DIRECTORY_PROXY'),
         'token' => env('DIRECTORY_TOKEN'),
     ],
 
