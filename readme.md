@@ -29,6 +29,7 @@ The following settings can be changed in your `.env`:
 |--------------------|---------------------------------|----------|---------|-----------------------------------------------|
 | DIRECTORY_ENDPOINT | directory-link.api.endpoint     | Yes      |         | The URL of the Directory system               |
 | DIRECTORY_TOKEN    | directory-link.api.token        | Yes      |         | The Directory access token for this system    |
+| DIRECTORY_PROXY    | directory-link.api.proxy        | No       | null    | The proxy to use to access the directory      |
 | DIRECTORY_EMULATOR | directory-link.emulator.enabled | No       | false   | Whether the directory emulator should be used |
 
 The following additional settings are available in the `directory-link.php` configuration file:

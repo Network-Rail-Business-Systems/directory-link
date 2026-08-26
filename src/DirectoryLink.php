@@ -19,9 +19,12 @@ class DirectoryLink
     ): array {
         $response = config('directory-link.emulator.enabled') === true
             ? DirectoryLink::emulateResult($endpoint, $term, $field)
-            : Http::withToken(
-                config('directory-link.api.token'),
-            )
+            : Http::withOptions([
+                'proxy' => config('directory-link.api.proxy'),
+            ])
+                ->withToken(
+                    config('directory-link.api.token'),
+                )
                 ->acceptJson()
                 ->query(
                     config('directory-link.api.endpoint') . $endpoint,
