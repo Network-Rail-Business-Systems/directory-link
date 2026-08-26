@@ -34,9 +34,6 @@ class RefreshFromDirectory extends Command implements PromptsForMissingInput
         $localModelClass::query()
             ->each(function ($localModel) use ($localField, $progressBar, $directoryModelClass, $field) {
                 /** @var SyncsWithDirectory $localModel */
-
-                $this->info("Updating \"{$localModel->$localField}\"...");
-
                 $directoryModel = $directoryModelClass::get($localModel->$localField, $field);
 
                 if ($directoryModel !== null) {
@@ -48,9 +45,6 @@ class RefreshFromDirectory extends Command implements PromptsForMissingInput
             });
 
         $progressBar->finish();
-
-        /** @var class-string<SyncsWithDirectory> $localModelClass */
-        $localModelClass::importFromDirectory($field);
 
         $this->info('Complete!');
     }

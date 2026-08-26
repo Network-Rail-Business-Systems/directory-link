@@ -91,7 +91,6 @@ class DirectoryUser implements DirectoryModel
             $items[] = static::make($result);
         }
 
-        // TODO URL / Path / Query
         return new LengthAwarePaginator(
             $items,
             $data['total'],

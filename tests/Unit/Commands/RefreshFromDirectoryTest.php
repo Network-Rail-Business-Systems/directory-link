@@ -26,9 +26,8 @@ class RefreshFromDirectoryTest extends TestCase
         $this->artisan('directory-link:refresh')
             ->expectsChoice('Which type of model do you want to refresh?', 'user', ['group', 'user'])
             ->expectsOutput('Starting user refresh using "id" => "azure_id"...')
-            ->expectsOutput("Updating \"{$this->model->azure_id}\"...")
             ->expectsOutput('Complete!');
 
-        $this->assertDatabaseCount('my_models', 2);
+        $this->assertDatabaseCount('my_models', 1);
     }
 }
