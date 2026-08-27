@@ -14,7 +14,7 @@ class ListTest extends TestCase
     {
         parent::setUp();
 
-        $this->list = DirectoryGroup::list('a');
+        $this->list = DirectoryGroup::list('fellowship@middle-earth.com');
     }
 
     public function test(): void

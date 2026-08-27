@@ -14,7 +14,7 @@ class ListTest extends TestCase
     {
         parent::setUp();
 
-        $this->list = DirectoryUser::list('a');
+        $this->list = DirectoryUser::list('gandalf.stormcrow@networkrail.co.uk');
     }
 
     public function test(): void

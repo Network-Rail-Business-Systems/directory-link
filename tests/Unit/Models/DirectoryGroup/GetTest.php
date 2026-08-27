@@ -11,7 +11,7 @@ class GetTest extends TestCase
     {
         $this->assertInstanceOf(
             DirectoryGroup::class,
-            DirectoryGroup::get('a'),
+            DirectoryGroup::get('fellowship@middle-earth.com'),
         );
     }
 

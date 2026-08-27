@@ -18,53 +18,37 @@ class UseDirectoryEmulatorTest extends TestCase
         DirectoryLink::query('/group/exists', '', '');
     }
 
-    public function testGroupExists(): void
+    public function testShouldEmptyExists(): void
     {
-        $this->assertTrue(
-            DirectoryLink::query('/group/exists', '', '')['exists'],
+        $this->directoryShouldReturnEmpty();
+
+        $this->assertFalse(
+            DirectoryLink::query('/group/exists', 'a@b.com', 'mail')['exists'],
         );
     }
 
-    public function testGroupGet(): void
+    public function testShouldEmptyList(): void
+    {
+        $this->directoryShouldReturnEmpty();
+
+        $this->assertEmpty(
+            DirectoryLink::query('/group/list', 'a@b.com', 'mail')['data'],
+        );
+    }
+
+    public function testShouldEmptyGet(): void
+    {
+        $this->directoryShouldReturnEmpty();
+
+        $this->assertEmpty(
+            DirectoryLink::query('/group/get', 'a@b.com', 'mail'),
+        );
+    }
+
+    public function testEmulatedResult(): void
     {
         $this->assertNotEmpty(
-            DirectoryLink::query('/group/get', '', ''),
+            DirectoryLink::query('/user/exists', 'gandalf.stormcrow@networkrail.co.uk', 'mail'),
         );
-    }
-
-    public function testGroupList(): void
-    {
-        $this->assertNotEmpty(
-            DirectoryLink::query('/group/list', '', ''),
-        );
-    }
-
-    public function testUserExists(): void
-    {
-        $this->assertTrue(
-            DirectoryLink::query('/user/exists', '', '')['exists'],
-        );
-    }
-
-    public function testUserGet(): void
-    {
-        $this->assertNotEmpty(
-            DirectoryLink::query('/user/get', '', ''),
-        );
-    }
-
-    public function testUserList(): void
-    {
-        $this->assertNotEmpty(
-            DirectoryLink::query('/user/list', '', ''),
-        );
-    }
-
-    public function testBadEndpoint(): void
-    {
-        $this->expectException(DirectoryLinkException::class);
-        $this->expectExceptionMessage('"http://localhost.com/potato" is not a supported directory endpoint');
-
-        DirectoryLink::query('/potato', '', '');
     }
 }

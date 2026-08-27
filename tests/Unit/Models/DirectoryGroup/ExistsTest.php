@@ -10,7 +10,7 @@ class ExistsTest extends TestCase
     public function test(): void
     {
         $this->assertTrue(
-            DirectoryGroup::exists('a'),
+            DirectoryGroup::exists('fellowship@middle-earth.com'),
         );
     }
 }

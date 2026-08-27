@@ -2,6 +2,7 @@
 
 namespace NetworkRailBusinessSystems\DirectoryLink;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Http;
 use NetworkRailBusinessSystems\DirectoryLink\Exceptions\DirectoryLinkException;
 
@@ -98,7 +99,7 @@ class DirectoryLink
                 'exists' => empty($results) === false,
             ],
             str_contains($endpoint, 'get') => $results[0] ?? [],
-            default => $results,
+            default => (new LengthAwarePaginator($results, 20, 10, 1))->toArray(),
         };
     }
 }
