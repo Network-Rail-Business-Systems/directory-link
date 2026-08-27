@@ -89,8 +89,16 @@ class DirectoryLink
             return $first;
         }
 
-        return array_filter($directory, function (array $item) use ($term, $field) {
+        $results = array_filter($directory, function (array $item) use ($term, $field) {
             return $item[$field] === $term;
         });
+
+        return match (true) {
+            str_contains($endpoint, 'exists') => [
+                'exists' => empty($results) === false,
+            ],
+            str_contains($endpoint, 'get') => $results[0] ?? [],
+            default => $results,
+        };
     }
 }

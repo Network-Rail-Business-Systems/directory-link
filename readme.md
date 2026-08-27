@@ -151,8 +151,6 @@ Add the `AssertsDirectory` trait to your testing class to use the following meth
 
 Use the emulator when you do not have a copy of the directory system running, such as local development.
 
-You should not use this emulator for unit tests.
-
 Set the `DIRECTORY_EMULATOR` .env setting to `true` to enable it.
 
 You can search for any of the models listed in the directory config file.
