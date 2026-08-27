@@ -22,7 +22,7 @@ class ExistsInDirectoryTest extends TestCase
         $this->assertRulePasses(
             $this->rule,
             'mail',
-            'a',
+            'gandalf.stormcrow@networkrail.co.uk',
         );
     }
 

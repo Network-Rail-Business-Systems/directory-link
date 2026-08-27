@@ -16,7 +16,7 @@ class EmulateResultTest extends TestCase
             'mail',
         );
 
-        $this->assertCount(1, $users);
+        $this->assertCount(1, $users['data']);
     }
 
     public function testListUser(): void
@@ -27,7 +27,7 @@ class EmulateResultTest extends TestCase
             'mail',
         );
 
-        $this->assertCount(1, $users);
+        $this->assertCount(1, $users['data']);
     }
 
     public function testGet(): void

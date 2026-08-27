@@ -7,6 +7,7 @@ use GuzzleHttp\Promise\PromiseInterface;
 use Illuminate\Http\Client\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Http;
+use NetworkRailBusinessSystems\DirectoryLink\DirectoryLink;
 use NetworkRailBusinessSystems\DirectoryLink\Models\DirectoryGroup;
 use NetworkRailBusinessSystems\DirectoryLink\Models\DirectoryUser;
 
@@ -44,32 +45,11 @@ trait AssertsDirectory
                 };
             }
 
-            return match (true) {
-                str_contains($url, 'group/exists'),
-                str_contains($url, 'user/exists') => $this->directoryHttpResponse([
-                    'exists' => true,
-                ]),
-                str_contains($url, 'group/get') => $this->directoryHttpResponse(
-                    $this->directoryFakeGroup(false),
-                ),
-                str_contains($url, 'group/list') => $this->directoryHttpResponse(
-                    $this->directoryFakeList([
-                        $this->directoryFakeGroup(false),
-                    ]),
-                ),
-                str_contains($url, 'user/get') => $this->directoryHttpResponse(
-                    $this->directoryFakeUser(false),
-                ),
-                str_contains($url, 'user/list') => $this->directoryHttpResponse(
-                    $this->directoryFakeList([
-                        $this->directoryFakeUser(false),
-                    ]),
-                ),
-                default => $this->directoryHttpResponse([
-                    'error' => "\"$url\" is not a supported directory endpoint",
-                    'status' => 500,
-                ]),
-            };
+            $data = $request->data();
+
+            return $this->directoryHttpResponse(
+                DirectoryLink::emulateResult($url, $data['term'], $data['field']),
+            );
         });
     }
 

@@ -14,7 +14,7 @@ class QueryTest extends TestCase
             [
                 'exists' => true,
             ],
-            DirectoryLink::query('/user/exists', 'a', 'a'),
+            DirectoryLink::query('/user/exists', 'gandalf.stormcrow@networkrail.co.uk', 'mail'),
         );
     }
 

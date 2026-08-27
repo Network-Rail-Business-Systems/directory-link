@@ -11,7 +11,7 @@ class GetTest extends TestCase
     {
         $this->assertInstanceOf(
             DirectoryUser::class,
-            DirectoryUser::get('a'),
+            DirectoryUser::get('gandalf.stormcrow@networkrail.co.uk'),
         );
     }
 

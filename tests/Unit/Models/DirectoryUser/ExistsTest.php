@@ -10,7 +10,7 @@ class ExistsTest extends TestCase
     public function test(): void
     {
         $this->assertTrue(
-            DirectoryUser::exists('a'),
+            DirectoryUser::exists('gandalf.stormcrow@networkrail.co.uk'),
         );
     }
 }
