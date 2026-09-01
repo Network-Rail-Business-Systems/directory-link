@@ -98,7 +98,7 @@ class DirectoryLink
             str_contains($endpoint, 'exists') => [
                 'exists' => empty($results) === false,
             ],
-            str_contains($endpoint, 'get') => $results[0] ?? [],
+            str_contains($endpoint, 'get') => array_first($results) ?? [],
             default => (new LengthAwarePaginator($results, 20, 10, 1))->toArray(),
         };
     }
