@@ -32,31 +32,18 @@ class ImportFromDirectoryTest extends TestCase
         });
         config()->set('directory-link.models.user.local', SoftDeletesModel::class);
 
-        $model = SoftDeletesModel::importFromDirectory('a');
+        $original = SoftDeletesModel::importFromDirectory('a');
+        $original->delete();
 
-        $model->delete();
-
-        $this->assertTrue($model->trashed());
-
-        SoftDeletesModel::importFromDirectory('a');
+        $new = SoftDeletesModel::importFromDirectory('a');
 
         $this->assertFalse(
             SoftDeletesModel::withTrashed()
                 ->first()
                 ->trashed(),
         );
+        $this->assertTrue($original->is($new));
         $this->assertDatabaseCount('my_models', 1);
-    }
-
-    public function testDoesntRestoreWhenHardDeletes(): void
-    {
-        $original = MyModel::importFromDirectory('a');
-
-        $original->delete();
-
-        $new = MyModel::importFromDirectory('a');
-
-        $this->assertNotEquals($original, $new);
     }
 
     public function testThrows(): void
