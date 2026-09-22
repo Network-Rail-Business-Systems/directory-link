@@ -2,7 +2,9 @@
 
 namespace NetworkRailBusinessSystems\DirectoryLink\Traits;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use NetworkRailBusinessSystems\DirectoryLink\DirectoryLink;
 use NetworkRailBusinessSystems\DirectoryLink\Exceptions\NotInDirectoryException;
 use NetworkRailBusinessSystems\DirectoryLink\Interfaces\DirectoryModel;
@@ -24,9 +26,14 @@ trait UsesDirectory
         $directoryModelClass = config("directory-link.models.$type.directory");
         $directoryModel = $directoryModelClass::get($term, $on);
 
+        $softDeletes = in_array(SoftDeletes::class, class_uses_recursive(static::class));
+
         return $directoryModel === null
             ? throw new NotInDirectoryException("\"$term\" could not be found in the directory")
             : static::query()
+                ->when($softDeletes, function (Builder $query) {
+                    $query->withTrashed();
+                })
                 ->where($localOn, '=', $term)
                 ->firstOrNew()
                 ->processDirectoryDetails($directoryModel)
