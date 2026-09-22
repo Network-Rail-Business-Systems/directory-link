@@ -37,11 +37,7 @@ class ImportFromDirectoryTest extends TestCase
 
         $new = SoftDeletesModel::importFromDirectory('a');
 
-        $this->assertFalse(
-            SoftDeletesModel::withTrashed()
-                ->first()
-                ->trashed(),
-        );
+        $this->assertFalse($new->trashed());
         $this->assertTrue($original->is($new));
         $this->assertDatabaseCount('my_models', 1);
     }
