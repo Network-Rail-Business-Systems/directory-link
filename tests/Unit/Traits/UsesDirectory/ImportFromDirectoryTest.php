@@ -2,7 +2,8 @@
 
 namespace NetworkRailBusinessSystems\DirectoryLink\Tests\Unit\Traits\UsesDirectory;
 
-use Carbon\Carbon;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 use NetworkRailBusinessSystems\DirectoryLink\Exceptions\NotInDirectoryException;
 use NetworkRailBusinessSystems\DirectoryLink\Tests\Models\MyModel;
 use NetworkRailBusinessSystems\DirectoryLink\Tests\Models\SoftDeletesModel;
@@ -24,17 +25,38 @@ class ImportFromDirectoryTest extends TestCase
         $this->assertDatabaseCount('my_models', 1);
     }
 
-    public function testSoftDeletes(): void
+    public function testRestoresSoftDeletedModel(): void
     {
+        Schema::table('my_models', function (Blueprint $table) {
+            $table->softDeletes();
+        });
         config()->set('directory-link.models.user.local', SoftDeletesModel::class);
 
-        $model = new SoftDeletesModel();
-        $model->deleted_at = Carbon::now();
+        $model = SoftDeletesModel::importFromDirectory('a');
+
+        $model->delete();
+
+        $this->assertTrue($model->trashed());
 
         SoftDeletesModel::importFromDirectory('a');
 
-        $this->assertTrue($model->trashed());
+        $this->assertFalse(
+            SoftDeletesModel::withTrashed()
+                ->first()
+                ->trashed(),
+        );
         $this->assertDatabaseCount('my_models', 1);
+    }
+
+    public function testDoesntRestoreWhenHardDeletes(): void
+    {
+        $original = MyModel::importFromDirectory('a');
+
+        $original->delete();
+
+        $new = MyModel::importFromDirectory('a');
+
+        $this->assertNotEquals($original, $new);
     }
 
     public function testThrows(): void

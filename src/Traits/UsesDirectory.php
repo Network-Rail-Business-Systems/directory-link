@@ -31,7 +31,7 @@ trait UsesDirectory
         return $directoryModel === null
             ? throw new NotInDirectoryException("\"$term\" could not be found in the directory")
             : static::query()
-                ->when($softDeletes, function (Builder $query) {
+                ->when($softDeletes === true, function (Builder $query) {
                     $query->withTrashed();
                 })
                 ->where($localOn, '=', $term)
@@ -52,6 +52,13 @@ trait UsesDirectory
 
         foreach ($mapping as $directoryKey => $localKey) {
             $this->$localKey = $model->$directoryKey;
+        }
+
+        if (
+            in_array(SoftDeletes::class, class_uses_recursive(static::class))
+            && $this->trashed()
+        ) {
+            $this->restore();
         }
 
         $this->save();
