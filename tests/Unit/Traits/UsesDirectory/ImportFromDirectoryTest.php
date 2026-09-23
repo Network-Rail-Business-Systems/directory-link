@@ -2,8 +2,6 @@
 
 namespace NetworkRailBusinessSystems\DirectoryLink\Tests\Unit\Traits\UsesDirectory;
 
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use NetworkRailBusinessSystems\DirectoryLink\Exceptions\NotInDirectoryException;
 use NetworkRailBusinessSystems\DirectoryLink\Tests\Models\MyModel;
 use NetworkRailBusinessSystems\DirectoryLink\Tests\Models\SoftDeletesModel;
@@ -27,9 +25,6 @@ class ImportFromDirectoryTest extends TestCase
 
     public function testRestoresSoftDeletedModel(): void
     {
-        Schema::table('my_models', function (Blueprint $table) {
-            $table->softDeletes();
-        });
         config()->set('directory-link.models.user.local', SoftDeletesModel::class);
 
         $original = SoftDeletesModel::importFromDirectory('a');

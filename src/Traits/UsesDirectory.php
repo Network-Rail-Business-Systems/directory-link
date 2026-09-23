@@ -26,12 +26,10 @@ trait UsesDirectory
         $directoryModelClass = config("directory-link.models.$type.directory");
         $directoryModel = $directoryModelClass::get($term, $on);
 
-        $softDeletes = in_array(SoftDeletes::class, class_uses_recursive(static::class));
-
         return $directoryModel === null
             ? throw new NotInDirectoryException("\"$term\" could not be found in the directory")
             : static::query()
-                ->when($softDeletes === true, function (Builder $query) {
+                ->when(static::usesSoftDeletes() === true, function (Builder $query) {
                     $query->withTrashed();
                 })
                 ->where($localOn, '=', $term)
@@ -55,8 +53,8 @@ trait UsesDirectory
         }
 
         if (
-            in_array(SoftDeletes::class, class_uses_recursive(static::class))
-            && $this->trashed()
+            static::usesSoftDeletes() === true
+            && $this->trashed() === true
         ) {
             $this->restore();
         }
@@ -64,5 +62,10 @@ trait UsesDirectory
         $this->save();
 
         return $this;
+    }
+
+    protected static function usesSoftDeletes(): bool
+    {
+        return in_array(SoftDeletes::class, class_uses_recursive(static::class));
     }
 }
