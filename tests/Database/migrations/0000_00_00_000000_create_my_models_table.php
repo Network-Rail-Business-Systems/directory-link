@@ -8,6 +8,8 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('my_models', function (Blueprint $table) {
+            $table->softDeletes();
+
             $table->string('azure_id')->primary();
             $table->string('business_area');
             $table->string('email');
