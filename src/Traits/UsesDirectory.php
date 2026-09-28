@@ -68,4 +68,9 @@ trait UsesDirectory
     {
         return in_array(SoftDeletes::class, class_uses_recursive(static::class));
     }
+
+    public function getPasswordAttribute(): string
+    {
+        return '';
+    }
 }
