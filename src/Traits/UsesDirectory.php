@@ -52,7 +52,7 @@ trait UsesDirectory
         return $this;
     }
 
-    public function getPasswordAttribute(): ?string
+    public function getPasswordAttribute(): string
     {
         return '';
     }

@@ -16,7 +16,6 @@ class GetPasswordAttributeTest extends TestCase
     {
         parent::setUp();
 
-        $this->directoryUser = $this->directoryFakeUser();
         $this->model = new MyModel();
     }
 
