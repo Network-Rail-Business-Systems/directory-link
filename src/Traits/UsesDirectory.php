@@ -54,6 +54,6 @@ trait UsesDirectory
 
     public function getPasswordAttribute(): ?string
     {
-        return null;
+        return '';
     }
 }
