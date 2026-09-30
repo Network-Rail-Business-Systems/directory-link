@@ -42,6 +42,7 @@ return [
                 'officeLocation' => 'location',
                 'phone' => 'phone',
                 'surname' => 'last_name',
+                'userPrincipalName' => 'username',
             ],
         ],
     ],

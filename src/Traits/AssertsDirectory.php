@@ -106,6 +106,7 @@ trait AssertsDirectory
             'officeLocation' => $faker->streetAddress(),
             'phone' => $faker->phoneNumber(),
             'department' => $faker->company(),
+            'userPrincipalName' => $faker->userName(),
             'employeeId' => $faker->numerify('#####'),
         ];
 

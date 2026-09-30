@@ -17,6 +17,7 @@ use NetworkRailBusinessSystems\DirectoryLink\Traits\UsesDirectory;
  * @property string $name
  * @property string $phone
  * @property string $title
+ * @property string $username
  */
 class MyModel extends Model implements SyncsWithDirectory
 {
@@ -33,6 +34,7 @@ class MyModel extends Model implements SyncsWithDirectory
         'name',
         'phone',
         'title',
+        'username',
     ];
 
     public $timestamps = false;
