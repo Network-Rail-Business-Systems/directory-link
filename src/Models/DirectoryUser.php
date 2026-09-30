@@ -20,6 +20,7 @@ class DirectoryUser implements DirectoryModel
         public string $officeLocation = '',
         public string $phone = '',
         public string $department = '',
+        public string $userPrincipalName = '',
         public int $employeeId = 0,
     ) {
         //
@@ -37,6 +38,7 @@ class DirectoryUser implements DirectoryModel
             $data['officeLocation'] ?? '',
             $data['phone'] ?? '',
             $data['department'] ?? '',
+            $data['userPrincipalName'] ?? '',
             $data['employeeId'] ?? 0,
         );
     }
