@@ -22,7 +22,7 @@
     ],
     "require": {
         "php": "^8.3",
-        "illuminate/support": "^13|^12"
+        "illuminate/support": "^13.19"
     },
     "require-dev": {
         "anthonyedmonds/laravel-testing-traits": "^1",
