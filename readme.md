@@ -16,7 +16,7 @@ Resources for connecting to the Directory system
    ```
 2. Publish and adjust the `directory-link.php` config file:
    ```bash
-   php artisan vendor:publish --tag="entra"
+   php artisan vendor:publish --tag="directory-link"
    ```
 3. Adjust your `.env` to include the required settings
 4. Ensure you have the needed database columns for syncing, if used

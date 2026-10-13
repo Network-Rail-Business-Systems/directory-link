@@ -40,11 +40,13 @@ class DirectoryGroup implements DirectoryModel
         string $term,
         string $field = 'mail',
     ): bool {
-        return DirectoryLink::query(
+        $exists = DirectoryLink::query(
             '/group/exists',
             $term,
             $field,
-        )['exists'] === true;
+        )['exists'] ?? false;
+
+        return $exists === true;
     }
 
     public static function get(
