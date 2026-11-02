@@ -112,11 +112,13 @@ public function rules(): array
 
 #### ImportUserFromDirectory
 
-You can import models from the directory using the `directory-link:import {type} {term}` command:
+You can import models from the directory using the `directory-link:import {type} {term} {field?}` command:
 
 ```bash
-php artisan directory-link:import user joe.bloggs@networkrail.co.uk
+php artisan directory-link:import user joe.bloggs@networkrail.co.uk mail
 ```
+
+The "field" parameter will default to the `syncs.on` configuration for the model type if not set.
 
 #### RefreshUsersFromDirectory
 
@@ -127,8 +129,6 @@ This is useful for backfilling information when local models have not been added
 ```bash
 php artisan directory-link:refresh user email
 ```
-
-If left blank, the `field` parameter will use the `directory-link.<type>.on` setting.
 
 This will only update existing local models.
 

@@ -8,7 +8,7 @@ use NetworkRailBusinessSystems\DirectoryLink\Interfaces\SyncsWithDirectory;
 
 class ImportFromDirectory extends Command implements PromptsForMissingInput
 {
-    protected $signature = 'directory-link:import {type} {term}';
+    protected $signature = 'directory-link:import {type} {term} {field?}';
 
     protected $description = 'Import a model from the directory';
 
@@ -16,12 +16,13 @@ class ImportFromDirectory extends Command implements PromptsForMissingInput
     {
         $type = $this->argument('type');
         $term = $this->argument('term');
+        $field = $this->argument('field') ?? config("directory-link.sync.$type.on");
 
-        $this->info("Attempting to import $type \"$term\"...");
+        $this->info("Attempting to import $type where \"$field\" = \"$term\"...");
 
         /** @var class-string<SyncsWithDirectory> $localModelClass */
         $localModelClass = config("directory-link.models.$type.local");
-        $localModelClass::importFromDirectory($term);
+        $localModelClass::importFromDirectory($term, $field);
 
         $this->info('Complete!');
     }
@@ -29,15 +30,8 @@ class ImportFromDirectory extends Command implements PromptsForMissingInput
     protected function promptForMissingArgumentsUsing(): array
     {
         return [
-            'type' => function () {
-                return $this->choice(
-                    'Which type of model do you want to import?',
-                    array_keys(
-                        config('directory-link.sync'),
-                    ),
-                );
-            },
-            'term' => 'What term should be used to find the model to import?',
+            'type' => 'Which type of Directory model do you want to import? (user, group)',
+            'term' => 'What term should be used to find the model to import? (for the provided field)',
         ];
     }
 }
