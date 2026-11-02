@@ -24,7 +24,8 @@ class RefreshFromDirectoryTest extends TestCase
     public function test(): void
     {
         $this->artisan('directory-link:refresh')
-            ->expectsChoice('Which type of model do you want to refresh?', 'user', ['group', 'user'])
+            ->expectsQuestion('Which type of Directory model do you want to refresh? (user, group)', 'user')
+            ->expectsQuestion('Which Directory field should be synced on? (as known in Azure, such as "mail" or "id")', 'id')
             ->expectsOutput('Starting user refresh using "id" => "azure_id"...')
             ->expectsOutput('Complete!');
 

@@ -10,14 +10,14 @@ use NetworkRailBusinessSystems\DirectoryLink\Interfaces\SyncsWithDirectory;
 
 class RefreshFromDirectory extends Command implements PromptsForMissingInput
 {
-    protected $signature = 'directory-link:refresh {type} {field?}';
+    protected $signature = 'directory-link:refresh {type} {field}';
 
     protected $description = 'Refresh all local models using the directory';
 
     public function handle(): void
     {
         $type = $this->argument('type');
-        $field = $this->argument('field') ?? config("directory-link.sync.$type.on");
+        $field = $this->argument('field');
         $localField = config("directory-link.sync.$type.attributes.$field");
 
         $this->info("Starting $type refresh using \"$field\" => \"$localField\"...");
@@ -52,14 +52,8 @@ class RefreshFromDirectory extends Command implements PromptsForMissingInput
     protected function promptForMissingArgumentsUsing(): array
     {
         return [
-            'type' => function () {
-                return $this->choice(
-                    'Which type of model do you want to refresh?',
-                    array_keys(
-                        config('directory-link.sync'),
-                    ),
-                );
-            },
+            'type' => 'Which type of Directory model do you want to refresh? (user, group)',
+            'field' => 'Which Directory field should be synced on? (as known in Azure, such as "mail" or "id")',
         ];
     }
 }
